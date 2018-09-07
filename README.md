@@ -1,32 +1,31 @@
-JavaScript Nodegit Clone Demo
-=============================
+JavaScript Nodegit Clone Infinite Retries Fix Demo
+==================================================
 
-Mac下需要做一些准备工作
--------------
+在Nodegit中有一个问题，当我们使用username/password去clone一个repo时，如果有误，它不会退出，而是进入死循环，一直重试。
 
-在Linux下（如Ubuntu）不需要。
+这个issue位于: <https://github.com/nodegit/nodegit/issues/1133>
 
-1. 使用旧版本的node，比如`v8.11.2`
-    1. 可以使用[nvm](https://github.com/creationix/nvm)来管理。
-    2. 使用`node -version`检查版本号
-1. `brew install libgcrypt`
-2. 保证`python2`命令正常工作
-    1. `python2 --version`
-    2. 可以使用`brew install python2`或者`pyenv`来管理
+错误原因应该是来自由底层使用的libgit2库：<https://github.com/nodegit/nodegit/issues/1133#issuecomment-271148133>
 
-安装与运行
------
+所以我们只能手动的记录一下重试次数，发现次数过多时，自己throw一个error强迫它退出。
 
-确保`node`版本是一个经过测试可以正确运行的版本号：
+在我们这个Demo里，直接写死了一个错误的用户名和密码，供重现问题：
 
 ```
-$ node -v
-v8.11.2
-```
-
-```
-npm install
 node demo.js
 ```
 
-它将会把git repo从github下下载到`./local-repo`目录下
+输出如下：
+
+```
+---------------- credentials (tries: 1)---------------
+---------------- credentials (tries: 2)---------------
+---------------- credentials (tries: 3)---------------
+Authentication is failed with 3 tries, please check your username and password
+{ Error: Method clone has thrown an error. errno: -1, errorFunction: 'Clone.clone' }
+```
+
+注意
+---
+
+在Mac下使用nodegit比较麻烦，参考这里的准备工作：<https://github.com/freewind-demos/javascript-nodegit-clone-demo>
