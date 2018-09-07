@@ -17,7 +17,16 @@ Mac下需要做一些准备工作
 安装与运行
 -----
 
+确保`node`版本是一个经过测试可以正确运行的版本号：
+
+```
+$ node -v
+v8.11.2
+```
+
 ```
 npm install
-npm run demo
+node demo.js
 ```
+
+它将会把git repo从github下下载到`./local-repo`目录下
