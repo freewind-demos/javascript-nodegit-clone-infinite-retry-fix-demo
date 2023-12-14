@@ -1,8 +1,8 @@
 {
-  "scripts": {
-    "demo": "rm -rf local-repo & node demo.js"
-  },
-  "dependencies": {
-    "nodegit": "^0.22.2"
-  }
+    "scripts": {
+        "start": "rm -rf local-repo & node demo.js"
+    },
+    "dependencies": {
+        "nodegit": "^0.22.2"
+    }
 }
